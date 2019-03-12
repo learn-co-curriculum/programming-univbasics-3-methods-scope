@@ -4,38 +4,75 @@
 
 - Recognize what scope is
 - Recognize local scope
+- Recognize scopes overlap
+- Recognize global scope
 
 ## Introduction
 
 Now that we've talked about methods, we will also discuss another very important
 concept -- scopes! Scope defines where in a program a _variable_ is accessible.
-A variable is a name that Ruby associates with a particular object. These
-objects are locations in memory that hold any data to be used by the program. It
-is important to understand scope, not just in Ruby, but in any programming
-language. Understanding this concept well can help developers avoid errors, like
-_variables_ not being defined and incorrect variable assignments, that can cause
-confusion and frustration.
+A variable is a name that Ruby associates with a particular value: For example
+`dog = "Poodle"` or `age = 32`. These objects are hold any information we want
+to save and reuse. Understanding this concept well can help developers avoid
+errors and debug _extremely_ sneaky scope bugs.
 
 ## Recognize What Scope Is
 
-Think of method scope like a hotel room. There are no windows to other rooms
-(you cannot see what's going on in other rooms). Inside of this room, we can see
-the variables. These variables are "known" and "visible" inside of the room.
-Other variables in another room are not known in or from this particular room,
-but are known and visible in those other rooms.
+Say you go to a Mexican restaurant for tacos for lunch. You go in and sit down.
+A waiter comes along, takes your order and disappears. You wait...
 
-Every time there is a method call (let's say that we've invited in some other
-unregistered guests), when it enters the room, it's now in a "new" scope. 
+And wait...
+
+And wait...
+
+You decide to flag down the waitstaff and ask "Hey, I've been waiting a really
+long time, do you know where my order is?"
+
+Within the context of it being lunch time in this taco restaurant, and you have
+created a relationship with the waiter, the waitstaff knows that "order for
+person at table #12" should be in their notepad, or should be in the kitchen,
+your order has meaning in that context. "Order for table #12" is a variable that
+"points to" your delicious tacos.
+
+Say you walked over to a store across the street and asked "Do you know where
+order for table #12 is?" In that context your variable doesn't make sense. This
+spot might be a pet grooming salon. They don't know about taco orders, they
+don't know about tables, and they certainly don't know about your recent order
+of tacos.
+
+In real life we have a sense of "scope" because understand what's an appropriate
+thing to ask about in a given context.
+
+## Recognize Scopes Overlap
+
+Every time we create a new method, you create a new scope. It’s like Ruby is
+opening a gate for you and taking you to an entirely different context with
+entirely different variables.
+
+!["Universal Studios Hollywood"](https://www.universalstudioshollywood.com/wp-content/themes/ush_theme/assets/images/USH_Map_2018_Final.jpg)
+
+If you've ever spent any time in a amusement park, you likely experienced coming
+into a what felt like a "whole new world" each time you enter a new section of
+the park. "The Wizarding World of Harry Potter" looks very different from
+Springfield U.S.A., and there are completely different rides and attractions.
+
+However, scopes overlap. When we go to a taco restaurant, a pet grooming store,
+or into an amusement park with different sections, we don't stop being a human.
+In any of these locations, anyone working there still knows we're human. Scopes,
+or contexts, "overlap." Something that is defined in a "higher" scope is visible
+in a "lower" scope. A method is defined inside inside of a class. Any method is
+considered a lower scope than the class, like an amusement park with many
+sections, or a shopping mall with many restaurants and shops inside.
+
+## Recognize Local Scope
 
 Ruby has four types of variable scope: `local`, `global`, `instance` and
 `class`. The type of variable that is important to recognize right now are
 `local` variables.
 
-## Recognize Local Scope
-
-Things that are inside the "room" are "local" to this method's scope. They are
-only visible in this scope. Outside of it, they are unknown. That means the
-staff at the hotel will never know we have 7 guests crammed into a 2 bed room!
+Things like a taco order in a taco restaurant are "local" to that context, and a
+local variable is "local" to that method's scope. It is only visible in this
+scope. Outside of it, it is unknown.
 
 In Ruby, local variables begin with a lowercase letter or `_`. They can look
 like a simple `word` or `snake_cased` phrase. A local variable declared in a
@@ -48,10 +85,12 @@ end
 ```
 
 If you paste this code into IRB and call `my_ruby_method`, you'll get an error.
-When you call a variable that has not yet been defined, you will see an error: 
+When you call a variable that has not yet been defined, you will see an error:
 
-```NameError: undefined local variable or method `local_variable' for
-main:Object```
+```ruby
+NameError: undefined local variable or method `local_variable' for
+main:Object
+```
 
 When Ruby executes a program, it evaluates one statement after another. When it
 encounters a plain word like `local_variable` then it will check if, within the
@@ -63,7 +102,7 @@ name it will then raise the error message.
 **Note:** In Ruby, both local variable names and method names, are written the
 same way -- in plain words.
 
-The Ruby will put a local variable in scope whenever it sees it being assigned
+Ruby will put a local variable in scope whenever it sees it being assigned
 to something. It doesn’t matter if the code is not executed, the moment the
 interpreter sees an assignment a local variable, it puts it in scope. Here, we
 will properly define `local_variable`:
@@ -78,15 +117,38 @@ end
 
 Now if you run this code in IRB, you will see the the out**put** "Hello World!".
 
+## Recognize Global Scope
+
+Global variables in Ruby are accessible from anywhere in the Ruby program, no
+matter where they are named. Global variable names are start with a dollar sign
+($). For example: `$global_variable` or `$GLOBAL_VARIABLE`.
+
+Global variables may sound preferable to use since they are available
+everywhere, however, this is a fairly "unpopular" pattern in Ruby programming.
+Global variables make programs unpredictable. It's harder to track where changes
+are happening.
+
+On top of that confusion, if you have a big program, you'll likely run into
+naming issues. If the names are not unique enough, there will be conflicts, and
+you'll have to keep track of all of those global variables.
+
+There are a few special global variables that can be used, but for the most
+part, they aren't used. You won't really need to know all that much about global
+variables to understand most Ruby programs, but you should at least know that
+they're there.
+
 ## Conclusion
 
-Ruby is a language that has been designed to make programming more approachable.
-Variable scope in Ruby translates to functionality in other languages like
-JavaScript. Understanding scope will allow you to employ many strategies in
-program design that help you toward having a more maintainable and error-free
-codebase.
+Understanding scope will allows us to employ many strategies in program design
+that help you toward having a more maintainable and error-free codebase in Ruby
+and even in other languages like JavaScript! Remember that scope is about
+context; in the local context, only that method will know about those variables.
+In the global context, as the name implies, the variables are accessible to the
+whole application. With this base knowledge, learning and applying other
+variables scopes will seem familiar to you.
 
 ## Resources
 
 [Understanding Scope in Ruby](https://www.sitepoint.com/understanding-scope-in-ruby/)
 [Scopes](http://ruby-for-beginners.rubymonstas.org/writing_methods/scopes.html)
+[Global Variables in Ruby](https://www.thoughtco.com/global-variables-2908384)
