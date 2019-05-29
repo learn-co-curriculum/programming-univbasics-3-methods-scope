@@ -127,7 +127,7 @@ end
 
 Now if you run this code in IRB, you will see the out**put** "Hello World!".
 But even if you didn't use `puts` on `local_variable`, for a brief second,
-as `my_ruby_method` the variable would excist in the method's local scope.
+as `my_ruby_method` the variable would exist in the method's local scope.
 
 ## Recognize Scopes Overlap
 
