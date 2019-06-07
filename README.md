@@ -199,3 +199,4 @@ variables scopes will seem familiar to you.
 [Scopes](http://ruby-for-beginners.rubymonstas.org/writing_methods/scopes.html)
 [Global Variables in Ruby](https://www.thoughtco.com/global-variables-2908384)
 
+
