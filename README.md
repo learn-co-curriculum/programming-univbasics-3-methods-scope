@@ -200,3 +200,4 @@ variables scopes will seem familiar to you.
 [Global Variables in Ruby](https://www.thoughtco.com/global-variables-2908384)
 
 
+
