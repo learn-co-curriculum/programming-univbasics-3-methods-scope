@@ -113,8 +113,8 @@ this name, then it will look for a method. If there’s _also_ no method with th
 name, Ruby will then raise the error message.
 
 Ruby will put a local variable in scope whenever it sees it being assigned
-to something. It doesn't matter if the code is not executed, the moment the
-interpreter sees an assignment a local variable, it puts it in scope. Here, we
+to something. It doesn't matter whether the code is executed. The moment the
+Ruby sees an assignment of a local variable, it puts it in scope. Here, we
 will properly define `local_variable` and use it:
 
 ```ruby
