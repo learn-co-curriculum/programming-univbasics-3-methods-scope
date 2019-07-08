@@ -122,7 +122,7 @@ def my_ruby_method
   local_variable = 'Hello World!'
   puts local_variable
 end
-# => Hello World!
+my_ruby_method # => Hello World!
 ```
 
 Now if you run this code in IRB, you will see the out**put** "Hello World!".
