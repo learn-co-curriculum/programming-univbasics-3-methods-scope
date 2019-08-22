@@ -9,15 +9,18 @@
 
 ## Introduction
 
-Now that we've talked about methods, we will also discuss another very
-important concept &mdash; scopes! "Scope" defines where in a program a
-_variable_ is accessible or "visible."  A variable is a name that Ruby
-associates with data. For example, `dog = "Poodle"` or
-`age = 32`.  Variables hold the information we want to save and reuse. But
-sometimes you can't access variables. They're said to be "invisible" or
+Now that we've talked about methods, we will discuss another very important
+concept: scopes!
+
+"Scope" defines where in a program a _variable_ is accessible or "visible."  A
+"variable is a name that Ruby associates with data. For example, `dog =
+""Poodle"` or `age = 32`. Variables hold the information we want to save and
+"reuse.
+
+But sometimes you can't access variables. They're said to be "invisible" or
 "inaccessible" outside of a certain "scope." We need to understand why variables
-are "scoped." Understanding this concept well helps developers avoid errors
-and debug _extremely_ sneaky bugs.
+are "scoped." Understanding this concept well helps developers avoid errors and
+debug _extremely_ sneaky bugs.
 
 ## Recognize What Scope Is
 
@@ -62,13 +65,13 @@ Global variable names start with a dollar sign (`$`). For example:
 `$global_variable` or `$GLOBAL_VARIABLE`.
 
 Global variables may sound preferable to use since they are available
-everywhere; however, this is a strongly discouraged pattern in all
-programming languages.  Global variables make programs unpredictable. It's harder to
-track where changes are happening. If we create a too-broadly-scoped or too-broadly named variable
-like `$data` and change it through the operations of multiple methods, it's
-really hard to debug what's going on.
+everywhere; however, this is a strongly discouraged pattern in all programming
+languages. Global variables make programs unpredictable. It's harder to track
+where changes are happening. If we create a too-broadly-scoped or too-broadly
+named variable like `$data` and change it through the operations of multiple
+methods, it's really hard to debug what's going on.
 
-On top of that confusion, if you have a big program, you'll likely run into
+On top of that confusion, if you have a big program you'll likely run into
 naming issues. If the names are not unique enough, there will be conflicts, and
 you'll have to keep track of all of those global variables. We like to keep
 the scope as small as possible. It's a lot like keycards in a hotel: every person
@@ -77,14 +80,14 @@ staff should have keycards that work on the floors to which they're assigned;
 and the manager and emergency services staff should be the _only_ people with a
 "global access" keycard.
 
-Now that' we've seen globally scoped variables are accessible in methods, is
+Now that we've seen globally scoped variables are accessible in methods, is
 the reverse true? It is not. Variables defined in **local** scopes cannot be
 accessed in other local scopes or the global scope.
 
 ## Recognize Local Scope
 
 Things like a taco order in a Mexican restaurant are "local" to that context. In
-the same way,  a local variable is "local" to its containing method's scope.
+the same way, a local variable is "local" to its containing method's scope.
 It is only visible in this scope. Outside of it, it is unknown.
 
 In Ruby, local variables begin with a lowercase letter or `_`. They can look
@@ -140,7 +143,7 @@ entirely different variables.
 If you've ever spent any time in an amusement park, you likely experienced coming
 into a what felt like a "whole new world" each time you enter a new section of
 the park. "The Wizarding World of Harry Potter" looks very different from
-Springfield U.S.A., home of "The Simpsons", and there are completely different
+Springfield U.S.A., home of "The Simpsons," and there are completely different
 rides and attractions.
 
 However, scopes overlap. When we go to a taco restaurant, a pet grooming store,
