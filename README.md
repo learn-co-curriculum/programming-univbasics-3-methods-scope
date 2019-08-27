@@ -65,7 +65,7 @@ particular restaurant and this particular time.
 
 Say you walked over to a dry cleaner across the street and asked: "Do you know where
 the order for table #12 is?" In that _context_ the `your_order` variable doesn't
-make sense.  Or what if you walked in to the restaurant two weeks later and asked about
+make sense.  Or what if you walked into the restaurant two weeks later and asked about
 `your_order`. The waiter would be confused. Restaurant orders are
 "scoped" or "exist in a context of" a time and place.
 
@@ -82,7 +82,7 @@ Global variable names start with a dollar sign (`$`). For example:
 `$global_variable`.
 
 Global variables may sound preferable to use since they are available
-everywhere; however, this is a strongly discouraged in all programming
+everywhere; however, this is strongly discouraged in all programming
 languages. Global variables make programs unpredictable. It's harder to track
 where changes are happening. If we create a too-broadly-scoped variable like `$data`
 and change it in many places through the operations of multiple
@@ -152,7 +152,7 @@ encounters a word like `local_variable` then it will check if, within the
 current scope, it knows a local variable with the same name. If so, it will use
 the value that is associated with this variable. If there’s no local variable with
 this name, then it will look for a method. If there’s _also_ no method or global
-variable with thismname, Ruby will then raise the error message.
+variable with this name, Ruby will then raise the error message.
 
 Here, we define `local_variable` and use it:
 
