@@ -18,7 +18,22 @@ concept: scopes!
 "reuse.
 
 But sometimes you can't access variables. They're said to be "invisible" or
-"inaccessible" outside of a certain "scope." We need to understand why variables
+"inaccessible" outside of a certain "scope." Scope is particularly important
+as we start writing methods because parameters are visible only within the
+`def...end` boundaries that "bound" the method's definition.
+
+```ruby
+# "why" can't be used here
+def sing(why="for my laughter")
+# "why" can't be used here
+  puts "Sing #{why}"
+end
+# "why" can't be used here
+sing
+sing("for my tears")
+```
+
+We need to understand why and how variables
 are "scoped." Understanding this concept well helps developers avoid errors and
 debug _extremely_ sneaky bugs.
 
@@ -34,25 +49,27 @@ And wait...
 After waiting too long, you decide to flag down the waiter and ask, "Hey,
 I've been waiting for a long time. Do you know where my order is?"
 
-Within the _context_ of the facts that it is:
+Your question exists in a "scope". The "scope" is defined by a few facts
+like:
 
-* lunchtime...
-* ....in this particular Mexican restaurant...
-* _and_ that you have created a relationship with the waiter...
+* It's lunchtime...
+* You're eating in this particular Mexican restaurant
+* _and_ that you have created a relationship with the waiter when they took your order
 
 The waiter knows that the data associated with the variable `your_order` should
-be recorded in their notepad and/or should be findable the kitchen.  The idea of
-`your_order` is like a variable and has meaning in the context or "scope" of this
+be recorded in their notepad. They immediately know to look in the kitchen
+to see if your tacos are sitting out, getting cold.
+
+The idea of `your_order` is like a variable and has meaning in the context or "scope" of this
 particular restaurant and this particular time. 
 
-Say you walked over to a store across the street and asked: "Do you know where
+Say you walked over to a dry cleaner across the street and asked: "Do you know where
 the order for table #12 is?" In that _context_ the `your_order` variable doesn't
-make sense.  Or what if you walked in two weeks later and asked about
+make sense.  Or what if you walked in to the restaurant two weeks later and asked about
 `your_order`. The waiter would be confused. Restaurant orders are
 "scoped" or "exist in a context of" a time and place.
 
-So, in real life, we have a sense of "scope." Code scope functions much the same
-way.
+So, in real life, we have a sense of "scope." Code scope functions similarly.
 
 ## Recognize Global Scope
 
@@ -62,32 +79,54 @@ anywhere in the Ruby program. Even inside of a method we can access variables
 in that scope.
 
 Global variable names start with a dollar sign (`$`). For example:
-`$global_variable` or `$GLOBAL_VARIABLE`.
+`$global_variable`.
 
 Global variables may sound preferable to use since they are available
-everywhere; however, this is a strongly discouraged pattern in all programming
+everywhere; however, this is a strongly discouraged in all programming
 languages. Global variables make programs unpredictable. It's harder to track
-where changes are happening. If we create a too-broadly-scoped or too-broadly
-named variable like `$data` and change it through the operations of multiple
+where changes are happening. If we create a too-broadly-scoped variable like `$data`
+and change it in many places through the operations of multiple
 methods, it's really hard to debug what's going on.
 
 On top of that confusion, if you have a big program you'll likely run into
-naming issues. If the names are not unique enough, there will be conflicts, and
-you'll have to keep track of all of those global variables. We like to keep
+naming issues. If the variable names are not unique enough, there will be conflicts, and
+we'll have to keep track of all of those global variables. We like to keep
 the scope as small as possible. It's a lot like keycards in a hotel: every person
 should have the keycard to the room they've rented for the night; cleaning
 staff should have keycards that work on the floors to which they're assigned;
 and the manager and emergency services staff should be the _only_ people with a
 "global access" keycard.
 
-Now that we've seen globally scoped variables are accessible in methods, is
-the reverse true? It is not. Variables defined in **local** scopes cannot be
-accessed in other local scopes or the global scope.
+Now we've seen that globally-scoped variables are accessible in methods.
+The reverse is not true. Variables defined in **local** scopes cannot be
+accessed in other scopes **or** the global scope.
 
 ## Recognize Local Scope
 
-Things like a taco order in a Mexican restaurant are "local" to that context. In
-the same way, a local variable is "local" to its containing method's scope.
+Things like a taco order in a Mexican restaurant are "local" to that context.
+
+In
+the same way, a
+
+* local variable in a method or
+* a _parameter_ for a method is "local" to its containing method's scope.
+
+It's worth repeating: ***all parameters in a method are locally scoped
+to their defining method***.
+
+Here's our example code again:
+
+```ruby
+# "why" can't be used here
+def sing(why="for my laughter")
+# "why" can't be used here
+  puts "Sing #{why}"
+end
+# "why" can't be used here
+sing
+sing("for my tears")
+```
+
 It is only visible in this scope. Outside of it, it is unknown.
 
 In Ruby, local variables begin with a lowercase letter or `_`. They can look
@@ -112,13 +151,10 @@ When Ruby executes a program, it evaluates one statement after another. When it
 encounters a word like `local_variable` then it will check if, within the
 current scope, it knows a local variable with the same name. If so, it will use
 the value that is associated with this variable. If there’s no local variable with
-this name, then it will look for a method. If there’s _also_ no method with this
-name, Ruby will then raise the error message.
+this name, then it will look for a method. If there’s _also_ no method or global
+variable with thismname, Ruby will then raise the error message.
 
-Ruby will put a local variable in scope whenever it sees it being assigned
-to something. It doesn't matter whether the code is executed. The moment the
-Ruby sees an assignment of a local variable, it puts it in scope. Here, we
-will properly define `local_variable` and use it:
+Here, we define `local_variable` and use it:
 
 ```ruby
 def my_ruby_method 
@@ -128,9 +164,8 @@ end
 my_ruby_method # => Hello World!
 ```
 
-Now if you run this code in IRB, you will see the out**put** "Hello World!".
-But even if you didn't use `puts` on `local_variable`, for a brief second,
-as `my_ruby_method` the variable would exist in the method's local scope.
+Now if you run this code in IRB, you will see the output "Hello World!".
+
 
 ## Recognize Scopes Overlap
 
@@ -150,9 +185,7 @@ However, scopes overlap. When we go to a taco restaurant, a pet grooming store,
 or into an amusement park with different sections, we don't stop being a human.
 In any of these locations, anyone working there still knows we're human. Scopes,
 or contexts, "overlap." Something that is defined in a "higher" scope is visible
-in a "lower" scope. A method is defined inside a class. Any method is
-considered a lower scope than the class, like an amusement park with many
-sections, or a shopping mall with many restaurants and shops inside.
+in a "lower" scope. The reverse, sensibly, is not true.
 
 In code we can represent this idea like:
 
@@ -189,12 +222,12 @@ context.
 ## Conclusion
 
 Understanding scope allows us to employ many strategies in program design
-that help you toward having a more maintainable and error-free codebase in Ruby
-and even in other languages like JavaScript! Remember that scope is about
-context; in the local context, only that method will know about those variables.
+that help you toward having more maintainable code.
+
+Remember that scope is about
+context; in the local context, only that context will know about those variables.
 In the global context, as the name implies, the variables are accessible to the
-whole application. With this base knowledge, learning and applying other
-variables scopes will seem familiar to you.
+whole application.
 
 ## Resources
 
