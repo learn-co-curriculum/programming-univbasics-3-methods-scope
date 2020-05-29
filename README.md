@@ -119,7 +119,7 @@ Here's our example code again:
 ```ruby
 # "why" can't be used here
 def sing(why="for my laughter")
-# "why" can't be used here
+# "why" CAN be used here
   puts "Sing #{why}"
 end
 # "why" can't be used here
