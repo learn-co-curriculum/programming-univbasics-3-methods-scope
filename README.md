@@ -25,7 +25,7 @@ as we start writing methods because parameters are visible only within the
 ```ruby
 # "why" can't be used here
 def sing(why="for my laughter")
-# "why" can't be used here
+# "why" CAN be used here
   puts "Sing #{why}"
 end
 # "why" can't be used here
