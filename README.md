@@ -214,7 +214,7 @@ visit_universal("Byron")
 # Byron, a human, visits the home of 'The Simpsons'
 ```
 
-The variable `$human`, a globally-scoped variable, "casts its shadow" into all
+The variable `$species`, a globally-scoped variable, "casts its shadow" into all
 the local scopes created by method definitions. But the locally-scoped
 variables' information cannot be gotten outside of those variables' defining
 context.
